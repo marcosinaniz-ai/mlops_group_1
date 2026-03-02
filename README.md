@@ -1,6 +1,7 @@
-# [Project Name: e.g., Retail Sales Forecasting]
+# Business Case – Health Insurance Cost Prediction
 
-**Author:** TODO_STUDENT (Your Group Name or number)  
+**Author:** Eduardo Debes, Nicolas Guadamillas, Benedetta Pagliardi,
+Marco Siñaniz, Max Vanderlinden
 **Course:** MLOps: Master in Business Analytics and Data Sciense
 **Status:** Session 1 (Initialization)
 
@@ -8,36 +9,28 @@
 This is a Test run for the group.
 
 ## 1. Business Objective
-*Replace this section with your project definition.*
-
-* **The Goal:** What business value does this model create?
-  > *Example: Reduce food waste by 10% by predicting daily bakery demand.*
-
-* **The User:** Who consumes the output and how?
-  > *Example: Store managers receive a weekly PDF report on Monday mornings.*
+This project transforms our previous machine learning model for predicting individual health insurance charges into a production-ready MLOps pipeline. The objective is to support health insurance pricing decisions by estimating expected medical costs based on demographic and lifestyle attributes.
+* **The Goal:** Develop a production-ready machine learning system that predicts individual health insurance charges based on demographic and lifestyle attributes.
+* **The User:** The primary users are actuarial analysts and underwriting teams within a health insurance company. They use the model’s predicted cost estimates to support premium pricing decisions, risk assessment, and portfolio analysis, helping ensure that individual policies are aligned with expected healthcare expenses.
 
 ---
 
 ## 2. Success Metrics
 *How do we know if the project is successful?*
 
-* **Business KPI (The "Why"):**
-  > *Example: Reduce unsold inventory costs by $5,000/month.*
+* **Business KPI (The "Why"):** The project is successful if the model improves pricing accuracy by reducing the gap between predicted and actual healthcare costs. More precise predictions support better risk-based pricing decisions and contribute to more stable loss ratios over time.
 
-* **Technical Metric (The "How"):**
-  > *Example: Model MAPE (Mean Absolute Percentage Error) < 15% on the test set.*
+* **Technical Metric (The "How"):** As this is a regression problem, performance is evaluated using R² and RMSE. The model should achieve an R² of at least 0.75 on the test set while maintaining stable RMSE across runs.
 
-* **Acceptance Criteria:**
-  > *Example: The model must outperform the current "moving average" baseline.*
+* **Acceptance Criteria:** The model must outperform a simple baseline (such as predicting the mean cost), execute reproducibly through the main pipeline, and pass all validation and automated tests.
 
 ---
 
 ## 3. The Data
 
-* **Source:** (e.g., Company Database, Kaggle CSV, API).
-* **Target Variable:** What specifically are you predicting/ classifying?
-* **Sensitive Info:** Are there emails, credit cards, or any PII (Personally Identifiable Information)?
-  > *⚠️ **WARNING:** If the dataset contains sensitive data, it must NEVER be committed to GitHub. Ensure `data/` is in your `.gitignore`.*
+* **Source:** The dataset is a public health insurance dataset originally used in our previous machine learning project. It contains individual-level demographic and lifestyle information along with associated medical charges.
+* **Target Variable:** The target variable is charges, representing the total healthcare cost incurred by an individual. This is treated as a regression problem.
+* **Sensitive Info:** The dataset is publicly available and anonymized. It does not contain personally identifiable information. All data directories are excluded from version control using .gitignore as a best practice.
 
 ---
 
@@ -53,7 +46,7 @@ This project follows a strict separation between "Sandbox" (Notebooks) and "Prod
 ├── .env                     # Secrets placeholder
 │
 ├── notebooks/               # Experimental sandbox
-│   └── yourbaseline.ipynb   # From previous work
+│   └── 01_health_insurance_baseline.ipynb   # From previous work
 │
 ├── src/                     # Production code (The "Factory")
 │   ├── __init__.py          # Python package
