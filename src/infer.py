@@ -34,22 +34,4 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     preds = model.predict(X_infer)
     df_pred = pd.DataFrame({"prediction": preds}, index=X_infer.index)
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Add business-specific postprocessing (clipping, thresholding, label mapping)
-    # Why: Output requirements vary (probabilities vs labels, constraints, calibration)
-    # Examples:
-    # 1. For classification: convert numeric labels to strings
-    # 2. Clip regression outputs to valid ranges (e.g., >= 0)
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
-
     return df_pred
