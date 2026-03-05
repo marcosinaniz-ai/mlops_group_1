@@ -53,8 +53,10 @@ This project follows a strict separation between "Sandbox" (Notebooks) and "Prod
 │   ├── clean_data.py        # Preprocessing & cleaning
 │   ├── validate.py          # Data quality checks
 │   ├── train.py             # Model training & saving
+│   ├── utils.py             # Centralize simple I/O primitives
 │   ├── evaluate.py          # Metrics & plotting
 │   ├── infer.py             # Inference logic
+│   ├── features.py          # Feature preprocessing
 │   └── main.py              # Pipeline orchestrator
 │
 ├── data/                    # Local storage (IGNORED by Git)
@@ -65,7 +67,17 @@ This project follows a strict separation between "Sandbox" (Notebooks) and "Prod
 │
 ├── reports/                 # Generated metrics, plots, and figures
 │
-└── tests/                   # Automated tests
+└── tests/                   # Testing all the src python scripts
+│   ├── __init__.py          # Python package
+│   ├── test_load_data.py        
+│   ├── test_clean_data.py       
+│   ├── test_validate.py          
+│   ├── test_train.py
+│   ├── test_utils.py               
+│   ├── test_evaluate.py
+│   ├── test_infer.py
+│   ├── test_features.py     
+│   └── test_main.py             
 ```
 
 ## 5. Execution Model
