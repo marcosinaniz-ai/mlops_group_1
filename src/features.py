@@ -1,19 +1,15 @@
 """
-Educational Goal:
-- Why this module exists in an MLOps system: Feature preprocessing must be consistent between training and inference to avoid skew.
-- Responsibility (separation of concerns): Define the feature transformation recipe (not fitting it) using ColumnTransformer.
-- Pipeline contract (inputs and outputs): Input is column-name configuration; output is an unfitted preprocessor object.
+Module: Features / Preprocessing
+--------------------------------
+Role: Define a consistent preprocessing recipe for training & inference.
 
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+This version matches src.main usage:
+  preprocessor = get_feature_preprocessor(numeric_cols=[...], categorical_cols=[...])
+
+Returns: an UNFITTED sklearn ColumnTransformer.
 """
 
-from typing import List, Optional
-
-
-
-
-from typing import Dict, List
+from typing import List, Sequence
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -21,18 +17,21 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
-def build_preprocessor(config: Dict) -> ColumnTransformer:
+def get_feature_preprocessor(
+    numeric_cols: Sequence[str],
+    categorical_cols: Sequence[str],
+) -> ColumnTransformer:
     """
-    Build an UNFITTED preprocessing recipe (blueprint).
-    Reads feature lists from config.yaml.
-    """
+    Build an UNFITTED preprocessing recipe.
 
-    features_cfg = config.get("features", {})
-    num_cols: List[str] = features_cfg.get("numerical", []) or []
-    cat_cols: List[str] = features_cfg.get("categorical", []) or []
+    - Numeric: median impute + standardize
+    - Categorical: most_frequent impute + one-hot
+    """
+    num_cols: List[str] = list(numeric_cols) if numeric_cols is not None else []
+    cat_cols: List[str] = list(categorical_cols) if categorical_cols is not None else []
 
     if not num_cols and not cat_cols:
-        raise ValueError("Feature lists are empty in config['features'].")
+        raise ValueError("numeric_cols and categorical_cols are both empty; cannot build preprocessor.")
 
     numeric_pipeline = Pipeline(
         steps=[
@@ -41,6 +40,7 @@ def build_preprocessor(config: Dict) -> ColumnTransformer:
         ]
     )
 
+    # sklearn compatibility: sparse_output introduced in newer versions
     try:
         ohe = OneHotEncoder(handle_unknown="ignore", drop="first", sparse_output=False)
     except TypeError:
@@ -54,16 +54,9 @@ def build_preprocessor(config: Dict) -> ColumnTransformer:
     )
 
     transformers = []
-
     if num_cols:
         transformers.append(("num", numeric_pipeline, num_cols))
-
     if cat_cols:
         transformers.append(("cat", categorical_pipeline, cat_cols))
 
-    preprocessor = ColumnTransformer(
-        transformers=transformers,
-        remainder="drop",
-    )
-
-    return preprocessor
+    return ColumnTransformer(transformers=transformers, remainder="drop")
