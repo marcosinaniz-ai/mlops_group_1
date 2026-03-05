@@ -1,3 +1,5 @@
+import pandas as pd
+
 """
 Module: Inference
 -----------------
@@ -7,16 +9,11 @@ Output: Predictions (Array or DataFrame).
 """
 
 """
-Educational Goal:
-- Why this module exists in an MLOps system: Inference must mirror training transformations to avoid serving skew.
-- Responsibility (separation of concerns): Run model.predict and format outputs into a stable schema for downstream systems.
-- Pipeline contract (inputs and outputs): Input fitted Pipeline + inference DataFrame; output DataFrame with one column: 'prediction'.
 
 TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+TODO: Any temporary or hardcoded variable or parameter will be imported from
+config.yml in a later session
 """
-
-import pandas as pd
 
 
 def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
@@ -25,31 +22,17 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     - model: Fitted scikit-learn Pipeline.
     - X_infer: Inference features DataFrame (same raw columns as training).
     Outputs:
-    - df_pred: DataFrame with a SINGLE column named 'prediction' preserving input index.
+    - df_pred: DataFrame with a SINGLE column named 'prediction' preserving
+    input index.
     Why this contract matters for reliable ML delivery:
-    - A stable prediction schema simplifies integrations (batch jobs, APIs) and reduces downstream breaking changes.
+    - A stable prediction schema simplifies integrations (batch jobs, APIs)
+    and reduces downstream breaking changes.
     """
-    print("[infer.run_inference] Running inference and returning prediction DataFrame")  # TODO: replace with logging later
+    print(
+        "[infer.run_inference] Running inference and returning prediction."
+    )  # TODO: replace with logging later
 
     preds = model.predict(X_infer)
     df_pred = pd.DataFrame({"prediction": preds}, index=X_infer.index)
-
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Add business-specific postprocessing (clipping, thresholding, label mapping)
-    # Why: Output requirements vary (probabilities vs labels, constraints, calibration)
-    # Examples:
-    # 1. For classification: convert numeric labels to strings
-    # 2. Clip regression outputs to valid ranges (e.g., >= 0)
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
 
     return df_pred
