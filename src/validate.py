@@ -7,7 +7,8 @@ Output: Boolean (True if valid) or raises Error.
 """
 """
 Educational Goal:
-- Why this module exists in an MLOps system: Validation catches obvious data contract breaks early (cheap) before training (expensive).
+- Why this module exists in an MLOps system: Validation catches obvious data 
+contract breaks early (cheap) before training (expensive).
 - Responsibility (separation of concerns): Fail fast on empty data and missing required columns; keep checks minimal and readable.
 - Pipeline contract (inputs and outputs): Input df + required column list; output True if valid, otherwise raise.
 
