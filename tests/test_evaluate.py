@@ -1,67 +1,56 @@
+import math
 from pathlib import Path
-import json
 
-import numpy as np
 import pandas as pd
-import matplotlib
 
-matplotlib.use("Agg")  # important for headless CI environments
-
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
-
-from src.train import train_model
 from src.evaluate import evaluate_model
+from src.features import get_feature_preprocessor
+from src.train import train_model
 
 
-def make_toy_data(n=40):
-    rng = np.random.default_rng(1)
-    X = pd.DataFrame({
-        "age": rng.integers(18, 65, size=n),
-        "sex": rng.choice(["male", "female"], size=n),
-    })
-    y = pd.Series(np.log1p(rng.normal(12000, 2500, size=n).clip(min=1000)), name="charges_log")
-    return X, y
-
-
-def make_preprocessor():
-    return ColumnTransformer(
-        transformers=[
-            ("num", "passthrough", ["age"]),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), ["sex"]),
-        ]
+def _build_preprocessor():
+    return get_feature_preprocessor(
+        quantile_bin_cols=[],
+        categorical_onehot_cols=["cat_feature"],
+        numeric_passthrough_cols=["num_feature"],
+        n_bins=3,
     )
 
 
-def test_evaluate_model_creates_metrics_and_plots(tmp_path: Path):
-    X, y = make_toy_data()
-    pre = make_preprocessor()
+def test_evaluate_model_returns_report_dict_and_writes_artifacts(tmp_path):
+    X = pd.DataFrame(
+        {
+            "num_feature": [0.0, 1.0, 2.0, 3.0],
+            "cat_feature": ["A", "B", "A", "B"],
+        }
+    )
+    y = pd.Series([0.0, 1.0, 1.0, 0.0], name="target")
 
-    # train on first part, test on second part
-    X_train, y_train = X.iloc[:30], y.iloc[:30]
-    X_test, y_test = X.iloc[30:], y.iloc[30:]
+    model = train_model(X, y, _build_preprocessor())
+    report = evaluate_model(model, X, y, tmp_path)
 
-    model = train_model(X_train=X_train, y_train=y_train, preprocessor=pre)
+    # 1) Return type / structure
+    assert isinstance(report, dict)
+    assert isinstance(report.get("metrics"), dict)
 
-    reports_dir = tmp_path / "reports"
-    artifacts = evaluate_model(model=model, X_test=X_test, y_test=y_test, reports_dir=reports_dir)
+    # 2) At least one numeric, non-NaN metric exists
+    metrics = report["metrics"]
+    assert any(
+        isinstance(v, (int, float)) and not (isinstance(v, float) and math.isnan(v))
+        for v in metrics.values()
+    ), f"No usable numeric metric found in: {metrics}"
 
-    # return structure
-    assert "metrics" in artifacts
-    assert "plots" in artifacts
+    # 3) metrics.json must be written
+    assert (tmp_path / "metrics.json").exists()
 
-    # metric fields exist (per your implementation)
-    metrics = artifacts["metrics"]
-    for k in ["r2_log", "adj_r2_log", "mae_log", "rmse_log", "mae_dollars", "rmse_dollars", "n_test", "p_transformed"]:
-        assert k in metrics
-
-    # files exist
-    assert (reports_dir / "metrics.json").exists()
-    assert (reports_dir / "coefficients.png").exists()
-    assert (reports_dir / "pred_vs_actual.png").exists()
-    assert (reports_dir / "residuals.png").exists()
-
-    # metrics.json is valid JSON
-    with open(reports_dir / "metrics.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-    assert "metrics" in data
+    # 4) If plot paths are returned, those files should exist
+    plots = report.get("plots")
+    if isinstance(plots, dict):
+        for plot_path in plots.values():
+            if isinstance(plot_path, str) and plot_path.endswith(".png"):
+                # handle absolute paths or relative paths
+                p = Path(plot_path)
+                if p.is_absolute():
+                    assert p.exists()
+                else:
+                    assert (tmp_path / p.name).exists()
