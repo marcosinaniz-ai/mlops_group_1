@@ -4,8 +4,15 @@ Module: Data Cleaning
 Role: Dataset-specific cleaning for the insurance dataset.
 Input: pandas.DataFrame (Raw).
 Output: pandas.DataFrame (Clean).
+
+This version matches src.main expectations:
+- Adds target_column (e.g. "log_charges") computed from "charges"
+- Drops "charges" afterward
 """
 
+from __future__ import annotations
+
+import numpy as np
 import pandas as pd
 
 
@@ -18,13 +25,10 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     """
     Clean raw insurance data into a stable, model-ready dataset.
 
-    Cleaning rules:
-      - Standardize column names (strip)
-      - Validate required columns exist
-      - Drop duplicate rows
-      - Coerce numeric columns to numeric (raise if impossible)
-      - Normalize categorical strings (lower/strip)
-      - Enforce target column exists and is numeric
+    Contract aligned with main.py:
+      - target_column is the name of the *output* target column (e.g. "log_charges")
+      - "charges" must exist in raw input
+      - output contains target_column and does NOT contain "charges"
     """
     if df_raw is None:
         raise ValueError("df_raw cannot be None")
@@ -40,32 +44,35 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     # 1) Standardize column names
     df.columns = [str(c).strip() for c in df.columns]
 
-    # 2) Validate schema
+    # 2) Validate required raw schema (must include charges)
     missing = REQUIRED_COLUMNS - set(df.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
 
-    # 3) Target validation
-    if target_column not in df.columns:
-        raise ValueError(
-            f"Target column '{target_column}' not found. Available columns: {list(df.columns)}"
-        )
-
-    # 4) Drop duplicates
+    # 3) Drop duplicates
     df = df.drop_duplicates()
 
-    # 5) Normalize categoricals
+    # 4) Normalize categoricals
     for c in CATEGORICAL_COLUMNS:
         df[c] = df[c].astype(str).str.strip().str.lower()
 
-    # Optional: normalize common values
-    # sex: male/female, smoker: yes/no
-    # (keep it light so you don't break unexpected variants)
+    # Normalize common variants lightly
     if "smoker" in df.columns:
         df["smoker"] = df["smoker"].replace({"y": "yes", "n": "no"})
 
-    # 6) Coerce numerics
+    # 5) Coerce numeric columns
     for c in NUMERIC_COLUMNS:
         df[c] = pd.to_numeric(df[c], errors="raise")
+
+    # 6) Create target column from charges
+    # Use log(charges) exactly like notebook expectation; require positive charges
+    if (df["charges"] <= 0).any():
+        bad_n = int((df["charges"] <= 0).sum())
+        raise ValueError(f"'charges' must be positive to compute log; found {bad_n} non-positive rows.")
+
+    df[target_column] = np.log(df["charges"]).astype(float)
+
+    # 7) Drop raw target
+    df = df.drop(columns=["charges"])
 
     return df
