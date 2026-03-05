@@ -1,60 +1,71 @@
 """
 Module: Data Cleaning
 ---------------------
-Role: Preprocessing, missing value imputation, and feature engineering.
+Role: Dataset-specific cleaning for the insurance dataset.
 Input: pandas.DataFrame (Raw).
-Output: pandas.DataFrame (Processed/Clean).
-"""
-
-"""
-Educational Goal:
-- Why this module exists in an MLOps system: Cleaning is dataset-specific and frequently changes; isolating it reduces regression risk.
-- Responsibility (separation of concerns): Transform raw DataFrame into a clean, model-ready tabular dataset (still pre-feature-engineering).
-- Pipeline contract (inputs and outputs): Input raw df + target column name; output cleaned df with target preserved.
-
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+Output: pandas.DataFrame (Clean).
 """
 
 import pandas as pd
 
 
+REQUIRED_COLUMNS = {"age", "sex", "bmi", "children", "smoker", "region", "charges"}
+CATEGORICAL_COLUMNS = {"sex", "smoker", "region"}
+NUMERIC_COLUMNS = {"age", "bmi", "children", "charges"}
+
+
 def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     """
-    Inputs:
-    - df_raw: Raw DataFrame.
-    - target_column: Name of the target column to preserve.
-    Outputs:
-    - df_clean: Cleaned DataFrame (baseline is identity copy).
-    Why this contract matters for reliable ML delivery:
-    - Separating cleaning from training prevents hidden notebook mutations and makes behavior reproducible across runs.
+    Clean raw insurance data into a stable, model-ready dataset.
+
+    Cleaning rules:
+      - Standardize column names (strip)
+      - Validate required columns exist
+      - Drop duplicate rows
+      - Coerce numeric columns to numeric (raise if impossible)
+      - Normalize categorical strings (lower/strip)
+      - Enforce target column exists and is numeric
     """
-    print("[clean_data.clean_dataframe] Cleaning raw dataframe (baseline: identity copy)")  # TODO: replace with logging later
+    if df_raw is None:
+        raise ValueError("df_raw cannot be None")
+    if not isinstance(df_raw, pd.DataFrame):
+        raise TypeError("df_raw must be a pandas DataFrame")
+    if df_raw.empty:
+        raise ValueError("df_raw is empty")
+    if not target_column or not isinstance(target_column, str):
+        raise ValueError("target_column must be a non-empty string")
 
-    df_clean = df_raw.copy()
+    df = df_raw.copy()
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Paste your notebook logic here to replace or extend the baseline
-    # Why: Cleaning depends on source quirks (missing values, outliers, deduplication, label fixes)
-    # Examples:
-    # 1. Drop rows with invalid target values, enforce types
-    # 2. Normalize text categories, impute missing numerical values
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
+    # 1) Standardize column names
+    df.columns = [str(c).strip() for c in df.columns]
 
-    # Minimal guardrail: ensure target exists if specified (do not mutate; validate.py handles required cols)
-    if target_column not in df_clean.columns:
-        print(
-            f"[clean_data.clean_dataframe] Warning: target_column '{target_column}' not found in dataframe columns"
-        )  # TODO: replace with logging later
+    # 2) Validate schema
+    missing = REQUIRED_COLUMNS - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns: {sorted(missing)}")
 
-    return df_clean
+    # 3) Target validation
+    if target_column not in df.columns:
+        raise ValueError(
+            f"Target column '{target_column}' not found. Available columns: {list(df.columns)}"
+        )
+
+    # 4) Drop duplicates
+    df = df.drop_duplicates()
+
+    # 5) Normalize categoricals
+    for c in CATEGORICAL_COLUMNS:
+        df[c] = df[c].astype(str).str.strip().str.lower()
+
+    # Optional: normalize common values
+    # sex: male/female, smoker: yes/no
+    # (keep it light so you don't break unexpected variants)
+    if "smoker" in df.columns:
+        df["smoker"] = df["smoker"].replace({"y": "yes", "n": "no"})
+
+    # 6) Coerce numerics
+    for c in NUMERIC_COLUMNS:
+        df[c] = pd.to_numeric(df[c], errors="raise")
+
+    return df
