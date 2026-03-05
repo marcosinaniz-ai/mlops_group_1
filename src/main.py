@@ -23,7 +23,6 @@ from src.load_data import load_raw_data
 from src.utils import save_csv, save_model
 from src.validate import validate_dataframe
 
-
 SETTINGS = {
     "paths": {
         "raw_data": "data/raw/insurance.csv",
