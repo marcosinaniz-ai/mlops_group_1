@@ -10,74 +10,60 @@ TODO: Any temporary or hardcoded variable or parameter will be imported from con
 
 from typing import List, Optional
 
+
+
+
+from typing import Dict, List
+
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
-def get_feature_preprocessor(
-    quantile_bin_cols: Optional[List[str]] = None,
-    categorical_onehot_cols: Optional[List[str]] = None,
-    numeric_passthrough_cols: Optional[List[str]] = None,
-    n_bins: int = 3,
-):
+def build_preprocessor(config: Dict) -> ColumnTransformer:
     """
-    Inputs:
-    - quantile_bin_cols: Numeric columns to bin into quantiles (leakage-safe when fitted only on train split).
-    - categorical_onehot_cols: Categorical columns to one-hot encode.
-    - numeric_passthrough_cols: Numeric columns to pass through unchanged.
-    - n_bins: Number of quantile bins for KBinsDiscretizer.
-    Outputs:
-    - preprocessor: Unfitted ColumnTransformer.
-    Why this contract matters for reliable ML delivery:
-    - A stable, unfitted recipe can be composed into a Pipeline and fitted only on training data to prevent leakage.
+    Build an UNFITTED preprocessing recipe (blueprint).
+    Reads feature lists from config.yaml.
     """
-    print("[features.get_feature_preprocessor] Building feature preprocessor recipe (unfitted)")  # TODO: replace with logging later
 
-    quantile_bin_cols = quantile_bin_cols or []
-    categorical_onehot_cols = categorical_onehot_cols or []
-    numeric_passthrough_cols = numeric_passthrough_cols or []
+    features_cfg = config.get("features", {})
+    num_cols: List[str] = features_cfg.get("numerical", []) or []
+    cat_cols: List[str] = features_cfg.get("categorical", []) or []
+
+    if not num_cols and not cat_cols:
+        raise ValueError("Feature lists are empty in config['features'].")
+
+    numeric_pipeline = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
+
+    try:
+        ohe = OneHotEncoder(handle_unknown="ignore", drop="first", sparse_output=False)
+    except TypeError:
+        ohe = OneHotEncoder(handle_unknown="ignore", drop="first", sparse=False)
+
+    categorical_pipeline = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("onehot", ohe),
+        ]
+    )
 
     transformers = []
 
-    if quantile_bin_cols:
-        transformers.append(
-            (
-                "quantile_bin",
-                KBinsDiscretizer(n_bins=n_bins, encode="onehot-dense", strategy="quantile"),
-                quantile_bin_cols,
-            )
-        )
+    if num_cols:
+        transformers.append(("num", numeric_pipeline, num_cols))
 
-    if categorical_onehot_cols:
-        # scikit-learn version compatibility:
-        # - newer versions use sparse_output
-        # - older versions use sparse
-        try:
-            ohe = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
-        except TypeError:
-            ohe = OneHotEncoder(handle_unknown="ignore", sparse=False)
-        transformers.append(("categorical_onehot", ohe, categorical_onehot_cols))
+    if cat_cols:
+        transformers.append(("cat", categorical_pipeline, cat_cols))
 
-    if numeric_passthrough_cols:
-        transformers.append(("numeric_passthrough", "passthrough", numeric_passthrough_cols))
+    preprocessor = ColumnTransformer(
+        transformers=transformers,
+        remainder="drop",
+    )
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Paste your notebook logic here to replace or extend the baseline
-    # Why: Feature engineering and encoding choices depend on model family and business constraints
-    # Examples:
-    # 1. Add text vectorization, date part extraction, or target encoding (careful!)
-    # 2. Add scaling, interaction features, or custom transformations
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
-
-    preprocessor = ColumnTransformer(transformers=transformers, remainder="drop")
     return preprocessor

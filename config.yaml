@@ -8,3 +8,34 @@ data:
 train:
   test_size: 0.2
   seed: 42
+
+schema:
+  required_columns:
+    - age
+    - sex
+    - bmi
+    - children
+    - smoker
+    - region
+    - charges
+  target: "charges"
+  domain:
+    non_negative:
+      - age
+      - children
+      - charges
+    positive:
+      - bmi
+    allowed_values:
+      sex: ["male", "female"]
+      smoker: ["yes", "no"]
+
+features:
+  numerical:
+    - age
+    - bmi
+    - children
+  categorical:
+    - sex
+    - smoker
+    - region
