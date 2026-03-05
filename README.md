@@ -6,7 +6,6 @@ Marco Siñaniz, Max Vanderlinden
 **Status:** Session 1 (Initialization)
 
 ---
-This is a Test run for the group.
 
 ## 1. Business Objective
 This project transforms our previous machine learning model for predicting individual health insurance charges into a production-ready MLOps pipeline. The objective is to support health insurance pricing decisions by estimating expected medical costs based on demographic and lifestyle attributes.
