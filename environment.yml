@@ -1,0 +1,17 @@
+name: mlops_g1
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python>=3.9
+  - pandas
+  - numpy
+  - scikit-learn
+  - joblib
+  - jupyter
+  - ipykernel
+  - pytest
+  - pytest-cov
+  - pip

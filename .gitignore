@@ -33,3 +33,12 @@ data/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/inference/.gitkeep
+
+# Ignore files created by the pipeline
+
+data/processed/clean.csv
+reports/coefficients.png
+reports/metrics.json
+reports/pred_vs_actual.png
+reports/predictions.csv
+reports/residuals.png
