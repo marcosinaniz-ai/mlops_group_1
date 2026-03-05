@@ -1,14 +1,13 @@
 import pytest
 import pandas as pd
-import yaml
 
 from src.validate import validate_dataframe
 
 
 @pytest.fixture
-def config():
-    with open("config.yaml", "r") as f:
-        return yaml.safe_load(f)
+def required_columns():
+    # columns that must exist in df
+    return ["age", "sex", "bmi", "children", "smoker", "region", "charges"]
 
 
 @pytest.fixture
@@ -26,25 +25,30 @@ def valid_df():
     )
 
 
-def test_validate_passes_on_valid_data(valid_df, config):
-    assert validate_dataframe(valid_df, config) is True
+def test_validate_passes_on_valid_data(valid_df, required_columns):
+    assert validate_dataframe(valid_df, required_columns, target_column="charges") is True
 
 
-def test_validate_fails_on_missing_column(valid_df, config):
+def test_validate_fails_on_empty_dataframe(required_columns):
+    df = pd.DataFrame()
+    with pytest.raises(ValueError):
+        validate_dataframe(df, required_columns, target_column="charges")
+
+
+def test_validate_fails_on_missing_required_column(valid_df, required_columns):
     df = valid_df.drop(columns=["age"])
     with pytest.raises(ValueError):
-        validate_dataframe(df, config)
+        validate_dataframe(df, required_columns, target_column="charges")
 
 
-def test_validate_fails_on_negative_value(valid_df, config):
-    df = valid_df.copy()
-    df["age"] = -5
+def test_validate_fails_on_missing_target_column(valid_df, required_columns):
+    df = valid_df.drop(columns=["charges"])
     with pytest.raises(ValueError):
-        validate_dataframe(df, config)
+        validate_dataframe(df, required_columns, target_column="charges")
 
 
-def test_validate_fails_on_invalid_category(valid_df, config):
+def test_validate_fails_when_target_not_numeric(valid_df, required_columns):
     df = valid_df.copy()
-    df["sex"] = "invalid"
+    df["charges"] = ["not-a-number"]
     with pytest.raises(ValueError):
-        validate_dataframe(df, config)
+        validate_dataframe(df, required_columns, target_column="charges")
