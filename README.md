@@ -84,7 +84,7 @@ This project follows a strict separation between "Sandbox" (Notebooks) and "Prod
 
 The full machine learning pipeline will eventually be executable through:
 
-`python src/main.py`
+`python -m src.main`
 
 
 
