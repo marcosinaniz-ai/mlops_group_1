@@ -25,7 +25,7 @@ def load_csv(filepath: Path) -> pd.DataFrame:
     print(f"[utils.load_csv] Loading CSV from: {filepath}")
 
     filepath = Path(filepath)
-    
+
     if not filepath.exists():
         raise FileNotFoundError(
             f"CSV not found at: {filepath}. Check data ingestion or file paths."

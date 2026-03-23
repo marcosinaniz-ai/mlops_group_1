@@ -10,10 +10,8 @@ from src.train import train_model
 
 def _build_preprocessor():
     return get_feature_preprocessor(
-        quantile_bin_cols=[],
-        categorical_onehot_cols=["cat_feature"],
-        numeric_passthrough_cols=["num_feature"],
-        n_bins=3,
+        numeric_cols=["num_feature"],
+        categorical_cols=["cat_feature"],
     )
 
 
