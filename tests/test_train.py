@@ -14,10 +14,8 @@ def test_train_model_returns_fitted_model():
     y = pd.Series([0.0, 1.0, 1.0, 0.0], name="target")
 
     preprocessor = get_feature_preprocessor(
-        quantile_bin_cols=[],
-        categorical_onehot_cols=["cat_feature"],
-        numeric_passthrough_cols=["num_feature"],
-        n_bins=3,
+        numeric_cols=["num_feature"],
+        categorical_cols=["cat_feature"],
     )
 
     model = train_model(X, y, preprocessor)
