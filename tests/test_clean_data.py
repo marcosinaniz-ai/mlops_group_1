@@ -1,12 +1,13 @@
 import pytest
+
 import pandas as pd
 import numpy as np
+
 from src.clean_data import clean_dataframe
 
 """
 Tests for src.clean_data module.
 """
-
 
 
 class TestCleanDataframeValidation:
@@ -59,7 +60,7 @@ class TestCleanDataframeProcessing:
         """Should successfully clean valid DataFrame."""
         df = self.sample_df()
         result = clean_dataframe(df, "log_charges")
-        
+
         assert "log_charges" in result.columns
         assert "charges" not in result.columns
         assert len(result) == 3
@@ -69,7 +70,7 @@ class TestCleanDataframeProcessing:
         df = self.sample_df()
         df = pd.concat([df, df.iloc[[0]]], ignore_index=True)
         result = clean_dataframe(df, "log_charges")
-        
+
         assert len(result) == 3
 
     def test_categorical_normalization(self):
@@ -78,7 +79,7 @@ class TestCleanDataframeProcessing:
         df.loc[0, "sex"] = "MALE"
         df.loc[1, "smoker"] = "YES"
         result = clean_dataframe(df, "log_charges")
-        
+
         assert result["sex"].iloc[0] == "male"
         assert result["smoker"].iloc[1] == "yes"
 
@@ -88,7 +89,7 @@ class TestCleanDataframeProcessing:
         df.loc[0, "smoker"] = "y"
         df.loc[1, "smoker"] = "n"
         result = clean_dataframe(df, "log_charges")
-        
+
         assert result["smoker"].iloc[0] == "yes"
         assert result["smoker"].iloc[1] == "no"
 
@@ -103,7 +104,7 @@ class TestCleanDataframeProcessing:
         """Should correctly compute log of charges."""
         df = self.sample_df()
         result = clean_dataframe(df, "log_charges")
-        
+
         expected_log = np.log(df["charges"].values)
         assert np.allclose(result["log_charges"].values, expected_log)
 
@@ -112,7 +113,7 @@ class TestCleanDataframeProcessing:
         df = self.sample_df()
         df["age"] = df["age"].astype(str)
         result = clean_dataframe(df, "log_charges")
-        
+
         assert pd.api.types.is_numeric_dtype(result["age"])
 
     def test_column_name_normalization(self):
@@ -120,6 +121,6 @@ class TestCleanDataframeProcessing:
         df = self.sample_df()
         df.columns = [f" {c} " for c in df.columns]
         result = clean_dataframe(df, "log_charges")
-        
+
         assert "charges" not in result.columns
         assert "log_charges" in result.columns
