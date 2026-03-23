@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 """
 Module: Inference
@@ -33,6 +34,6 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     )  # TODO: replace with logging later
 
     preds = model.predict(X_infer)
-    df_pred = pd.DataFrame({"prediction": preds}, index=X_infer.index)
+    df_pred = pd.DataFrame({"prediction": np.exp(preds)}, index=X_infer.index)
 
     return df_pred

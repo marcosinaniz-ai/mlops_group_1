@@ -20,7 +20,7 @@ from src.evaluate import evaluate_model
 from src.features import get_feature_preprocessor
 from src.infer import run_inference
 from src.load_data import load_raw_data
-from src.utils import save_csv, save_model
+from src.utils import load_csv, save_csv, save_model
 from src.validate import validate_dataframe
 
 SETTINGS = {
@@ -28,6 +28,7 @@ SETTINGS = {
         "raw_data": "data/raw/insurance.csv",
         "processed_clean": "data/processed/clean.csv",
         "model": "models/linreg_insurance.joblib",
+        "inference": "data/inference/insurance_inference.csv",
         "predictions": "reports/predictions.csv",
         "reports_dir": "reports",
     },
@@ -46,7 +47,7 @@ def main() -> None:
     print("[main.main] Starting end-to-end insurance prediction pipeline")
 
     # Ensure standard dirs
-    for d in ["data/raw", "data/processed", "models", "reports"]:
+    for d in ["data/raw", "data/processed", "data/inference", "models", "reports"]:
         Path(d).mkdir(parents=True, exist_ok=True)
 
     # Step 1: Load
@@ -96,8 +97,11 @@ def main() -> None:
     reports_dir = Path(SETTINGS["paths"]["reports_dir"])
     _ = evaluate_model(model=model, X_test=X_test, y_test=y_test, reports_dir=reports_dir)
 
-    # Step 10: Inference on X_test (example batch) + save predictions
-    df_pred = run_inference(model=model, X_infer=X_test)
+    # Step 10: Inference on inference data + save predictions
+    infer_path = Path(SETTINGS["paths"]["inference"])
+    df_infer = load_csv(infer_path)
+
+    df_pred = run_inference(model=model, X_infer=df_infer)
     pred_path = Path(SETTINGS["paths"]["predictions"])
     save_csv(df_pred, pred_path, index=True)  # keep index to align with test rows
 

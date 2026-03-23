@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 from src.infer import run_inference
 
@@ -33,7 +34,7 @@ def test_run_inference_returns_correct_schema_and_values():
     assert len(df_pred) == len(X_infer)
 
     # Assert: correct values from DummyModel
-    assert (df_pred["prediction"] == 42).all()
+    assert (df_pred["prediction"] == np.exp(42)).all()
 
 
 def test_run_inference_preserves_index():
