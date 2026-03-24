@@ -14,4 +14,6 @@ dependencies:
   - ipykernel
   - pytest
   - pytest-cov
+  - wandb
+  - python-dotenv
   - pip
