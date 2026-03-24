@@ -6,6 +6,7 @@ import src.main as main_module
 
 TARGET_COLUMN = "log_charges"
 
+
 @pytest.fixture
 def dummy_dataframe():
     """Minimal valid dataframe matching SETTINGS contract."""
@@ -51,7 +52,7 @@ def test_main_orchestrates_pipeline(monkeypatch, dummy_dataframe):
     monkeypatch.setattr(main_module, "save_csv", mock_save_csv)
     monkeypatch.setattr(main_module, "validate_dataframe", mock_validate)
     monkeypatch.setattr(main_module, "get_feature_preprocessor", MagicMock(return_value=mock_preprocessor))
-    monkeypatch.setattr("src.train.train_model", mock_train)
+    monkeypatch.setattr(main_module, "train_model", mock_train)
     monkeypatch.setattr(main_module, "save_model", mock_save_model)
     monkeypatch.setattr(main_module, "evaluate_model", mock_evaluate)
     monkeypatch.setattr(main_module, "run_inference", mock_infer)
