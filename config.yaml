@@ -43,3 +43,7 @@ features:
     - sex
     - smoker
     - region
+
+logging:
+  level: "INFO"
+  file: "reports/pipeline.log"

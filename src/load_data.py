@@ -10,9 +10,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import logging
+
 import pandas as pd
 
 from src.utils import load_csv
+
+logger = logging.getLogger(__name__)
 
 
 def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
@@ -24,6 +28,9 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
       - Output: Non-empty pandas.DataFrame
       - Fail-fast: raises clear exceptions if path is invalid
     """
+
+    logger.info(f"Loading raw data from: {raw_data_path}")
+
     if raw_data_path is None:
         raise ValueError("raw_data_path cannot be None")
 
@@ -42,5 +49,7 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
 
     if df_raw is None or df_raw.empty:
         raise ValueError(f"Loaded dataframe is empty from: {raw_data_path}")
+
+    logger.info("Successfully loaded raw data")
 
     return df_raw

@@ -11,10 +11,14 @@ Returns: an UNFITTED sklearn ColumnTransformer.
 
 from typing import List, Sequence
 
+import logging
+
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+logger = logging.getLogger(__name__)
 
 
 def get_feature_preprocessor(
@@ -27,8 +31,11 @@ def get_feature_preprocessor(
     - Numeric: median impute + standardize
     - Categorical: most_frequent impute + one-hot
     """
-    num_cols: List[str] = list(numeric_cols) if numeric_cols is not None else []
-    cat_cols: List[str] = list(categorical_cols) if categorical_cols is not None else []
+
+    logger.info("Building feature preprocessor")
+
+    num_cols = list(numeric_cols) if numeric_cols is not None else []
+    cat_cols = list(categorical_cols) if categorical_cols is not None else []
 
     if not num_cols and not cat_cols:
         raise ValueError("numeric_cols and categorical_cols are both empty; cannot build preprocessor.")
@@ -58,5 +65,7 @@ def get_feature_preprocessor(
         transformers.append(("num", numeric_pipeline, num_cols))
     if cat_cols:
         transformers.append(("cat", categorical_pipeline, cat_cols))
+
+    logger.info("Feature preprocessor built")
 
     return ColumnTransformer(transformers=transformers, remainder="drop")

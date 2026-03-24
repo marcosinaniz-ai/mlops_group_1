@@ -13,6 +13,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import logging
+
 from sklearn.model_selection import train_test_split
 import yaml
 
@@ -21,19 +23,20 @@ from src.evaluate import evaluate_model
 from src.features import get_feature_preprocessor
 from src.infer import run_inference
 from src.load_data import load_raw_data
+from src.logger import configure_logging
 from src.train import train_model
 from src.utils import load_csv, save_csv, save_model
 from src.validate import validate_dataframe
 
+logger = logging.getLogger(__name__)
 
 # -----------------------------
 # Config loading and validation
 # -----------------------------
 
+
 def load_config(config_path: Path) -> Dict[str, Any]:
     '''Load YAML config file and validate it loads into a dictionary'''
-
-    print(f"[config.load_config] Loading config from: {config_path}")  # TODO: logging later
 
     if not config_path.exists():
         raise FileNotFoundError(f"Config file not found: {config_path}")
@@ -73,8 +76,14 @@ def main() -> None:
     train_config = require_section(config, "train")
     schema_config = require_section(config, "schema")
     features_config = require_section(config, "features")
+    logging_config = require_section(config, "logging")
 
-    print("[main.main] Starting end-to-end insurance prediction pipeline")
+    configure_logging(
+        log_level=logging_config.get("level", "INFO"),
+        log_file=logging_config.get("file", "reports/pipeline.log")
+    )
+
+    logger.info("Starting end-to-end insurance prediction pipeline")
 
     # Ensure standard dirs
     for d in ["data/raw", "data/processed", "data/inference", "models", "reports"]:
@@ -103,7 +112,11 @@ def main() -> None:
     save_csv(df_clean, clean_path)
 
     # Step 4: Validate
-    required_cols = features_config["numerical"] + features_config["categorical"] + [schema_config["target"]]
+    required_cols = (
+        features_config["numerical"]
+        + features_config["categorical"]
+        + [schema_config["target"]])
+
     validate_dataframe(
         df_clean,
         required_columns=required_cols,
@@ -111,10 +124,12 @@ def main() -> None:
     )
 
     # Step 5: Split
+    logger.info("Splitting data into features (X) and prediction (y)")
     X = df_clean.drop(columns=[target_column])
     y = df_clean[target_column]
 
     # Simple split (not stratified; regression)
+    logger.info("Splitting data into train and test sets")
     X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
@@ -147,10 +162,10 @@ def main() -> None:
     pred_path = Path(paths_config["predictions"])
     save_csv(df_pred, pred_path, index=True)  # keep index to align with test rows
 
-    print("[main.main] Pipeline complete")
-    print(f"[main.main] Saved model: {model_path}")
-    print(f"[main.main] Saved predictions: {pred_path}")
-    print(f"[main.main] Reports directory: {reports_dir.resolve()}")
+    logger.info("Pipeline complete")
+    logger.info(f"Saved model: {model_path}")
+    logger.info(f"Saved predictions: {pred_path}")
+    logger.info(f"Reports directory: {reports_dir.resolve()}")
 
 
 if __name__ == "__main__":

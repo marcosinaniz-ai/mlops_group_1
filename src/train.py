@@ -7,9 +7,13 @@ Notebook logic:
 
 from __future__ import annotations
 
+import logging
+
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
+
+logger = logging.getLogger(__name__)
 
 
 def train_model(
@@ -17,7 +21,7 @@ def train_model(
     y_train: pd.Series,
     preprocessor,
 ):
-    print("[train.train_model] Training LinearRegression inside a Pipeline")
+    logger.info("Training LinearRegression inside a Pipeline")
 
     model = Pipeline(
         steps=[

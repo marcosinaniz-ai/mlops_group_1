@@ -13,6 +13,8 @@ Artifacts saved into reports/
 
 from __future__ import annotations
 
+import logging
+
 import math
 from pathlib import Path
 from typing import Any, Dict
@@ -24,6 +26,8 @@ import seaborn as sns
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from src.utils import save_json, safe_exp
+
+logger = logging.getLogger(__name__)
 
 
 def _plot_coefficients(model, reports_dir: Path, top_k: int = 30) -> Path:
@@ -75,6 +79,9 @@ def _plot_pred_vs_actual(y_test: pd.Series, y_pred: np.ndarray, reports_dir: Pat
 
 
 def _plot_residuals(y_test: pd.Series, y_pred: np.ndarray, reports_dir: Path) -> Path:
+
+    logger.info("Plotting residuals vs predicted and residual distribution")
+
     residuals = y_test.values - y_pred
 
     fig, axes = plt.subplots(1, 2, figsize=(10, 4))
@@ -102,7 +109,8 @@ def evaluate_model(
     y_test: pd.Series,
     reports_dir: Path,
 ) -> Dict[str, Any]:
-    print("[evaluate.evaluate_model] Evaluating model and saving report artifacts")
+
+    logger.info("Evaluating model and saving report artifacts")
 
     reports_dir.mkdir(parents=True, exist_ok=True)
 
@@ -148,13 +156,5 @@ def evaluate_model(
 
     # Save metrics JSON
     save_json(artifacts, reports_dir / "metrics.json")
-
-    print(
-        "[evaluate.evaluate_model] Metrics:\n"
-        f"  R^2 (log):          {r2:.3f}\n"
-        f"  Adj. R^2 (log):     {adj_r2:.3f}\n"
-        f"  MAE ($):            ${mae_dollars:,.2f}\n"
-        f"  RMSE ($):           ${rmse_dollars:,.2f}\n"
-    )
 
     return artifacts

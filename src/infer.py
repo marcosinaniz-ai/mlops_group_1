@@ -1,6 +1,3 @@
-import pandas as pd
-import numpy as np
-
 """
 Module: Inference
 -----------------
@@ -9,12 +6,14 @@ Input: Trained Model + New Data.
 Output: Predictions (Array or DataFrame).
 """
 
-"""
+import pandas as pd
+import numpy as np
 
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from
-config.yml in a later session
-"""
+import logging
+
+from src.utils import safe_exp
+
+logger = logging.getLogger(__name__)
 
 
 def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
@@ -29,11 +28,10 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     - A stable prediction schema simplifies integrations (batch jobs, APIs)
     and reduces downstream breaking changes.
     """
-    print(
-        "[infer.run_inference] Running inference and returning prediction."
-    )  # TODO: replace with logging later
+
+    logger.info("Running inference and returning prediction.")
 
     preds = model.predict(X_infer)
-    df_pred = pd.DataFrame({"prediction": np.exp(preds)}, index=X_infer.index)
+    df_pred = pd.DataFrame({"prediction": safe_exp(preds)}, index=X_infer.index)
 
     return df_pred
