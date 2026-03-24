@@ -1,9 +1,13 @@
 # MLOps Project Configuration
 # This file will eventually control paths, hyperparameters, and toggles.
 
-data:
-  raw: "data/raw/dataset.csv"
+paths:
+  raw: "data/raw/insurance.csv"
   processed: "data/processed/clean.csv"
+  model: "models/linreg_insurance.joblib"
+  inference: "data/inference/insurance_inference.csv"
+  predictions: "reports/predictions.csv"
+  reports_dir: "reports"
 
 train:
   test_size: 0.2
@@ -18,7 +22,7 @@ schema:
     - smoker
     - region
     - charges
-  target: "charges"
+  target: "log_charges"
   domain:
     non_negative:
       - age

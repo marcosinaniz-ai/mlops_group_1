@@ -13,9 +13,7 @@ from __future__ import annotations
 from typing import Iterable, List, Optional
 import pandas as pd
 
-    # --------------------------------
-    # START STUDENT CODE
-    # --------------------------------
+
 def validate_dataframe(
     df: pd.DataFrame,
     required_columns: Iterable[str],
@@ -27,12 +25,13 @@ def validate_dataframe(
       - all required_columns exist
       - target_column exists (if provided)
     """
+
     print("[validate.validate_dataframe] Validating dataframe (fail fast for empty/missing columns)")
 
     if df is None or df.empty:
         raise ValueError("Validation failed: DataFrame is empty. Check data ingestion and cleaning steps.")
 
-    required_columns_list: List[str] = list(required_columns) if required_columns is not None else []
+    required_columns_list = list(required_columns) if required_columns is not None else []
     if not required_columns_list:
         raise ValueError("Validation failed: required_columns is missing or empty.")
 
@@ -50,6 +49,3 @@ def validate_dataframe(
             raise ValueError(f"Validation failed: Target column '{target_column}' must be numeric.")
 
     return True
-    # ----------------------------
-    # END STUDENT CODE
-    # ----------------------------
