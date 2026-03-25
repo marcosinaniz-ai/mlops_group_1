@@ -13,6 +13,10 @@ from __future__ import annotations
 from typing import Iterable, List, Optional
 import pandas as pd
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def validate_dataframe(
     df: pd.DataFrame,
@@ -26,7 +30,7 @@ def validate_dataframe(
       - target_column exists (if provided)
     """
 
-    print("[validate.validate_dataframe] Validating dataframe (fail fast for empty/missing columns)")
+    logger.info("Validating dataframe (fail fast for empty/missing columns)")
 
     if df is None or df.empty:
         raise ValueError("Validation failed: DataFrame is empty. Check data ingestion and cleaning steps.")
@@ -47,5 +51,7 @@ def validate_dataframe(
         # Basic sanity: target should be numeric for this regression pipeline
         if not pd.api.types.is_numeric_dtype(df[target_column]):
             raise ValueError(f"Validation failed: Target column '{target_column}' must be numeric.")
+
+    logger.info("DataFrame validation passed")
 
     return True

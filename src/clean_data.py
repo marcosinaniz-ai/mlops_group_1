@@ -12,8 +12,12 @@ This version matches src.main expectations:
 
 from __future__ import annotations
 
+import logging
+
 import numpy as np
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def clean_dataframe(
@@ -31,6 +35,8 @@ def clean_dataframe(
       - "charges" must exist in raw input
       - output contains target_column and does NOT contain "charges"
     """
+
+    logger.info("Cleaning dataframe")
 
     # Check for existence of input dataframe
     if df_raw is None:
@@ -60,6 +66,7 @@ def clean_dataframe(
 
     # 3) Drop duplicates
     df = df.drop_duplicates()
+    logger.info(f"Dropped duplicates, {len(df)} rows remain")
 
     # 4) Normalize categoricals
     for c in categorical_columns:
@@ -83,5 +90,7 @@ def clean_dataframe(
 
     # 7) Drop raw target
     df = df.drop(columns=["charges"])
+
+    logger.info(f"Cleaned dataframe with {len(df)} rows and {len(df.columns)} columns")
 
     return df
