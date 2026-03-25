@@ -1,5 +1,4 @@
 # MLOps Project Configuration
-# This file will eventually control paths, hyperparameters, and toggles.
 
 paths:
   raw: "data/raw/insurance.csv"
@@ -47,3 +46,21 @@ features:
 logging:
   level: "INFO"
   file: "reports/pipeline.log"
+
+wandb:
+  enabled: true
+  project: "insurance-regression"
+  name: ""
+  job_type: "training-pipeline"
+  group: ""
+  notes: ""
+  tags:
+    - "insurance"
+    - "regression"
+    - "sklearn"
+  log_processed_data: true
+  log_predictions: true
+  log_predictions_table: true
+  predictions_table_rows: 50
+  log_evaluation_plots: true
+  model_artifact_name: "linreg-insurance-model"
