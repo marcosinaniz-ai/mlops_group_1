@@ -7,7 +7,7 @@ from src.infer import run_inference
 class DummyModel:
     def predict(self, X):
         # Deterministic output for testing
-        return [42] * len(X)
+        return np.array([42] * len(X))
 
 
 def test_run_inference_returns_correct_schema_and_values():
