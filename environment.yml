@@ -5,14 +5,33 @@ channels:
   - defaults
 
 dependencies:
-  - python>=3.9
+  - python>=3.10
+
+  # Core data + ML
   - pandas
   - numpy
   - scikit-learn
   - joblib
+
+  # Config + utilities
+  - pyyaml
+  - python-dotenv
+
+  # API stack
+  - fastapi
+  - uvicorn
+
+  # Dev / notebooks
   - jupyter
   - ipykernel
+
+  # Testing
   - pytest
   - pytest-cov
+
+  # Pip-only packages
   - pip
-  - pyyaml
+  
+  - wandb
+  - matplotlib
+  - seaborn
