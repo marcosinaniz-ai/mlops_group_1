@@ -1,0 +1,203 @@
+2026-03-26 17:21:00 | INFO | src.main | W&B disabled, continuing without experiment tracking
+2026-03-26 17:21:00 | INFO | src.main | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:21:00 | ERROR | src.main | Pipeline failed
+Traceback (most recent call last):
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\main.py", line 291, in main
+    required_cols = require_str(schema_config, "required_columns")
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\main.py", line 63, in require_str
+    raise ValueError(f"config.yaml: '{key}' must be a non-empty string")
+ValueError: config.yaml: 'required_columns' must be a non-empty string
+2026-03-26 17:21:02 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:21:02 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:21:02 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:21:02 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:21:02 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:21:02 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_save_csv_does_not_write_i0\data.csv
+2026-03-26 17:21:02 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_load_csv_raises_file_not_0\does_not_exist.csv
+2026-03-26 17:21:02 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_load_csv_raises_on_empty_0\empty.csv
+2026-03-26 17:21:02 | INFO | src.utils | Saving model to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:21:02 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:21:02 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-20\test_load_model_raises_file_no0\models\missing.joblib
+2026-03-26 17:21:02 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:21:02 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:21:02 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:21:02 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:21:02 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:21:02 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:23:55 | INFO | src.main | W&B disabled, continuing without experiment tracking
+2026-03-26 17:23:55 | INFO | src.main | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:23:55 | ERROR | src.main | Pipeline failed
+Traceback (most recent call last):
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\main.py", line 291, in main
+    required_cols = require_str(schema_config, "required_columns")
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\main.py", line 63, in require_str
+    raise ValueError(f"config.yaml: '{key}' must be a non-empty string")
+ValueError: config.yaml: 'required_columns' must be a non-empty string
+2026-03-26 17:23:57 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:23:57 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:23:57 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:23:57 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:23:57 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:23:57 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_save_csv_does_not_write_i0\data.csv
+2026-03-26 17:23:57 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_load_csv_raises_file_not_0\does_not_exist.csv
+2026-03-26 17:23:57 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_load_csv_raises_on_empty_0\empty.csv
+2026-03-26 17:23:57 | INFO | src.utils | Saving model to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:23:57 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:23:57 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-21\test_load_model_raises_file_no0\models\missing.joblib
+2026-03-26 17:23:57 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:23:57 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:23:57 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:23:57 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:23:57 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:23:57 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:29:30 | INFO | src.main | W&B disabled, continuing without experiment tracking
+2026-03-26 17:29:30 | INFO | src.main | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:29:30 | INFO | src.main | Splitting data into features (X) and target (y)
+2026-03-26 17:29:30 | INFO | src.main | Splitting data into train and test sets
+2026-03-26 17:29:30 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\inference\insurance_inference.csv
+2026-03-26 17:29:30 | INFO | src.main | Pipeline complete
+2026-03-26 17:29:30 | INFO | src.main | Saved model: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:29:30 | INFO | src.main | Saved predictions: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:29:30 | INFO | src.main | Reports directory: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports
+2026-03-26 17:29:30 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:29:30 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:29:30 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:29:30 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:29:30 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:29:30 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_save_csv_does_not_write_i0\data.csv
+2026-03-26 17:29:30 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_load_csv_raises_file_not_0\does_not_exist.csv
+2026-03-26 17:29:30 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_load_csv_raises_on_empty_0\empty.csv
+2026-03-26 17:29:30 | INFO | src.utils | Saving model to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:29:30 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:29:30 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-22\test_load_model_raises_file_no0\models\missing.joblib
+2026-03-26 17:29:30 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:29:30 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:29:30 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:29:30 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:29:30 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:29:30 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:30:03 | INFO | __main__ | W&B disabled, continuing without experiment tracking
+2026-03-26 17:30:03 | INFO | __main__ | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:30:03 | INFO | src.load_data | Loading raw data from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:30:03 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:30:03 | INFO | src.load_data | Successfully loaded raw data
+2026-03-26 17:30:03 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 17:30:03 | ERROR | __main__ | Pipeline failed
+Traceback (most recent call last):
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\main.py", line 336, in main
+    df_clean = clean_dataframe(
+        df_raw,
+    ...<3 lines>...
+        numeric_columns=set(numeric_cols),
+    )
+  File "G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\src\clean_data.py", line 60, in clean_dataframe
+    raise ValueError(f"Missing required columns: {sorted(missing)}")
+ValueError: Missing required columns: ['log_charges']
+2026-03-26 17:37:39 | INFO | src.main | W&B disabled, continuing without experiment tracking
+2026-03-26 17:37:39 | INFO | src.main | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:37:39 | INFO | src.main | Splitting data into features (X) and target (y)
+2026-03-26 17:37:39 | INFO | src.main | Splitting data into train and test sets
+2026-03-26 17:37:39 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\inference\insurance_inference.csv
+2026-03-26 17:37:39 | INFO | src.main | Pipeline complete
+2026-03-26 17:37:39 | INFO | src.main | Saved model: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:37:39 | INFO | src.main | Saved predictions: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:37:39 | INFO | src.main | Reports directory: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports
+2026-03-26 17:37:39 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:37:39 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:37:39 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:37:39 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:37:39 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:37:39 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_save_csv_does_not_write_i0\data.csv
+2026-03-26 17:37:39 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_load_csv_raises_file_not_0\does_not_exist.csv
+2026-03-26 17:37:39 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_load_csv_raises_on_empty_0\empty.csv
+2026-03-26 17:37:39 | INFO | src.utils | Saving model to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:37:39 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:37:39 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-23\test_load_model_raises_file_no0\models\missing.joblib
+2026-03-26 17:37:39 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:39 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:37:39 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:39 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:39 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:39 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:58 | INFO | __main__ | W&B disabled, continuing without experiment tracking
+2026-03-26 17:37:58 | INFO | __main__ | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:37:58 | INFO | src.load_data | Loading raw data from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:37:58 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:37:58 | INFO | src.load_data | Successfully loaded raw data
+2026-03-26 17:37:58 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 17:37:58 | INFO | src.clean_data | Dropped duplicates, 1327 rows remain
+2026-03-26 17:37:58 | INFO | src.clean_data | Created target column 'log_charges' from charges
+2026-03-26 17:37:58 | INFO | src.clean_data | Cleaned dataframe with 1327 rows and 7 columns
+2026-03-26 17:37:58 | INFO | src.utils | Saving CSV to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\processed\clean.csv
+2026-03-26 17:37:58 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:37:58 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:37:58 | INFO | __main__ | Splitting data into features (X) and target (y)
+2026-03-26 17:37:58 | INFO | __main__ | Splitting data into train and test sets
+2026-03-26 17:37:58 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:37:58 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:37:58 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:37:58 | INFO | src.utils | Saving model to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:37:59 | INFO | src.evaluate | Evaluating model and saving report artifacts
+2026-03-26 17:38:00 | INFO | src.evaluate | Plotting residuals vs predicted and residual distribution
+2026-03-26 17:38:00 | INFO | src.utils | Saving JSON to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\metrics.json
+2026-03-26 17:38:00 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\inference\insurance_inference.csv
+2026-03-26 17:38:00 | INFO | src.infer | Running inference and returning prediction.
+2026-03-26 17:38:00 | INFO | src.utils | Saving CSV to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:38:01 | INFO | __main__ | Pipeline complete
+2026-03-26 17:38:01 | INFO | __main__ | Saved model: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:38:01 | INFO | __main__ | Saved predictions: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:38:01 | INFO | __main__ | Reports directory: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports
+2026-03-26 17:44:18 | INFO | src.main | Initialized W&B run: project=insurance-regression, name=quiet-feather-5, job_type=training-pipeline
+2026-03-26 17:44:18 | INFO | src.main | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:44:18 | INFO | src.main | Splitting data into features (X) and target (y)
+2026-03-26 17:44:18 | INFO | src.main | Splitting data into train and test sets
+2026-03-26 17:44:21 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\inference\insurance_inference.csv
+2026-03-26 17:44:23 | INFO | src.main | Pipeline complete
+2026-03-26 17:44:23 | INFO | src.main | Saved model: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:44:23 | INFO | src.main | Saved predictions: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:44:23 | INFO | src.main | Reports directory: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports
+2026-03-26 17:44:43 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:44:43 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:44:43 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:44:43 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:44:43 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_save_and_load_csv_roundtr0\nested\folder\data.csv
+2026-03-26 17:44:43 | INFO | src.utils | Saving CSV to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_save_csv_does_not_write_i0\data.csv
+2026-03-26 17:44:43 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_load_csv_raises_file_not_0\does_not_exist.csv
+2026-03-26 17:44:43 | INFO | src.utils | Loading CSV from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_load_csv_raises_on_empty_0\empty.csv
+2026-03-26 17:44:43 | INFO | src.utils | Saving model to: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:44:43 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_save_and_load_model_round0\nested\models\model.joblib
+2026-03-26 17:44:43 | INFO | src.utils | Loading model from: C:\Users\eduar\AppData\Local\Temp\pytest-of-eduar\pytest-24\test_load_model_raises_file_no0\models\missing.joblib
+2026-03-26 17:44:43 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:44:43 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:44:43 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:44:43 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:44:43 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:44:43 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:45:53 | INFO | __main__ | Initialized W&B run: project=insurance-regression, name=fanciful-flower-6, job_type=training-pipeline
+2026-03-26 17:45:53 | INFO | __main__ | Starting end-to-end insurance prediction pipeline
+2026-03-26 17:45:53 | INFO | src.load_data | Loading raw data from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:45:53 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\raw\insurance.csv
+2026-03-26 17:45:53 | INFO | src.load_data | Successfully loaded raw data
+2026-03-26 17:45:53 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 17:45:53 | INFO | src.clean_data | Dropped duplicates, 1327 rows remain
+2026-03-26 17:45:53 | INFO | src.clean_data | Created target column 'log_charges' from charges
+2026-03-26 17:45:53 | INFO | src.clean_data | Cleaned dataframe with 1327 rows and 7 columns
+2026-03-26 17:45:53 | INFO | src.utils | Saving CSV to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\processed\clean.csv
+2026-03-26 17:45:53 | INFO | src.validate | Validating dataframe (fail fast for empty/missing columns)
+2026-03-26 17:45:53 | INFO | src.validate | DataFrame validation passed
+2026-03-26 17:45:53 | INFO | __main__ | Splitting data into features (X) and target (y)
+2026-03-26 17:45:53 | INFO | __main__ | Splitting data into train and test sets
+2026-03-26 17:45:53 | INFO | src.features | Building feature preprocessor
+2026-03-26 17:45:53 | INFO | src.features | Feature preprocessor built
+2026-03-26 17:45:53 | INFO | src.train | Training LinearRegression inside a Pipeline
+2026-03-26 17:45:53 | INFO | src.utils | Saving model to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:45:53 | INFO | src.evaluate | Evaluating model and saving report artifacts
+2026-03-26 17:45:55 | INFO | src.evaluate | Plotting residuals vs predicted and residual distribution
+2026-03-26 17:45:55 | INFO | src.utils | Saving JSON to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\metrics.json
+2026-03-26 17:45:58 | INFO | src.utils | Loading CSV from: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\data\inference\insurance_inference.csv
+2026-03-26 17:45:58 | INFO | src.infer | Running inference and returning prediction.
+2026-03-26 17:45:58 | INFO | src.utils | Saving CSV to: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:45:59 | INFO | __main__ | Pipeline complete
+2026-03-26 17:45:59 | INFO | __main__ | Saved model: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\models\linreg_insurance.joblib
+2026-03-26 17:45:59 | INFO | __main__ | Saved predictions: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports\predictions.csv
+2026-03-26 17:45:59 | INFO | __main__ | Reports directory: G:\My Drive\Term 2\Machine Learning Operations\mlops_group_1\reports
