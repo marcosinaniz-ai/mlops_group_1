@@ -50,4 +50,3 @@ wandb/*
 docker-compose.yml
 
 # Conda lock and environment artifacts (optional if generated locally)
-conda-lock.yml
