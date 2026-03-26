@@ -201,7 +201,8 @@ async def lifespan(app: FastAPI):
             api = wandb.Api()
             artifact = api.artifact(artifact_path)
             artifact_dir = artifact.download()
-            model_path = Path(artifact_dir) / "model.joblib"
+            model_filename = require_str(paths_cfg, "model").split("/")[-1]
+            model_path = Path(artifact_dir) / model_filename
 
             logger.info("Downloaded model from W&B: %s", artifact_path)
 

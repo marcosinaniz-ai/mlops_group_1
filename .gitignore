@@ -10,7 +10,7 @@ env/
 venv/
 
 # Tooling
-.pytest_cache/
+
 .mypy_cache/
 .coverage
 dist/
@@ -43,3 +43,10 @@ reports/*
 # WandB folder
 
 wandb/*
+
+# Docker / local container support
+# You can keep Dockerfile tracked if you want deployment config in repository.
+# Ignore local helper compose and temporary artifacts.
+docker-compose.yml
+
+# Conda lock and environment artifacts (optional if generated locally)
