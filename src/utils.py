@@ -16,16 +16,29 @@ import math
 from pathlib import Path
 from typing import Any, Union
 
+import logging
+
 import joblib
 import numpy as np
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 
 def load_csv(filepath: Path) -> pd.DataFrame:
-    print(f"[utils.load_csv] Loading CSV from: {filepath}")
+    """
+    Load a CSV file into a DataFrame with error handling.
+
+    Why this exists:
+    - Centralizes CSV loading logic and error handling.
+    - Provides clear, actionable errors for common issues (missing file, empty data).
+    - Ensures consistent logging for data loading across the project.
+    """
+
+    logger.info(f"Loading CSV from: {filepath}")
 
     filepath = Path(filepath)
-    
+
     if not filepath.exists():
         raise FileNotFoundError(
             f"CSV not found at: {filepath}. Check data ingestion or file paths."
@@ -51,7 +64,8 @@ def save_csv(df: pd.DataFrame, filepath: Path, index: bool = False) -> None:
       save_csv(df_clean, clean_path)
       save_csv(df_pred, pred_path, index=True)
     """
-    print(f"[utils.save_csv] Saving CSV to: {filepath}")
+
+    logger.info(f"Saving CSV to: {filepath}")
 
     filepath = Path(filepath)
     filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -60,7 +74,11 @@ def save_csv(df: pd.DataFrame, filepath: Path, index: bool = False) -> None:
 
 
 def save_model(model, filepath: Path) -> None:
-    print(f"[utils.save_model] Saving model to: {filepath}")
+    """
+    Save a scikit-learn model (or Pipeline) to disk using joblib.
+    """
+
+    logger.info(f"Saving model to: {filepath}")
 
     filepath = Path(filepath)
     filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -69,7 +87,11 @@ def save_model(model, filepath: Path) -> None:
 
 
 def load_model(filepath: Path):
-    print(f"[utils.load_model] Loading model from: {filepath}")
+    """
+    Load a scikit-learn model (or Pipeline) from disk using joblib.
+    """
+    
+    logger.info(f"Loading model from: {filepath}")
 
     filepath = Path(filepath)
     if not filepath.exists():
@@ -84,7 +106,8 @@ def save_json(obj: Any, filepath: Path) -> None:
     """
     Save a JSON-serializable object to disk.
     """
-    print(f"[utils.save_json] Saving JSON to: {filepath}")
+    
+    logger.info(f"Saving JSON to: {filepath}")
 
     filepath = Path(filepath)
     filepath.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,27 @@
+# Ignore git metadata and local IDE files
+.git
+.gitignore
+.vscode
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Data/artifacts not needed in image
+data/raw/
+data/processed/
+data/inference/
+reports/
+wandb/
+notebooks/
+
+# history/logs
+*.log
+
+# optional: exclude models from image and provide via mounts
+models/
+
+# dotenv secret file
+.env

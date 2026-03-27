@@ -1,14 +1,14 @@
-import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+
+import pytest
 import pandas as pd
+from unittest.mock import patch
+
 from src.load_data import load_raw_data
 
 """
 Tests for src.load_data module.
 """
-
-
 
 
 class TestLoadRawData:

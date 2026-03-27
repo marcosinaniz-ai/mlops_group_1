@@ -10,7 +10,7 @@ env/
 venv/
 
 # Tooling
-.pytest_cache/
+
 .mypy_cache/
 .coverage
 dist/
@@ -34,11 +34,20 @@ data/*
 !data/processed/.gitkeep
 !data/inference/.gitkeep
 
+
 # Ignore files created by the pipeline
 
 data/processed/clean.csv
-reports/coefficients.png
-reports/metrics.json
-reports/pred_vs_actual.png
-reports/predictions.csv
-reports/residuals.png
+reports/*
+logs/*
+
+# WandB folder
+
+wandb/*
+
+# Docker / local container support
+# You can keep Dockerfile tracked if you want deployment config in repository.
+# Ignore local helper compose and temporary artifacts.
+docker-compose.yml
+
+# Conda lock and environment artifacts (optional if generated locally)

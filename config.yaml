@@ -1,9 +1,13 @@
 # MLOps Project Configuration
-# This file will eventually control paths, hyperparameters, and toggles.
 
-data:
-  raw: "data/raw/dataset.csv"
+paths:
+  raw: "data/raw/insurance.csv"
   processed: "data/processed/clean.csv"
+  inference: "data/inference/insurance_inference.csv"
+  model: "models/linreg_insurance.joblib"
+  predictions: "reports/predictions.csv"
+  reports_dir: "reports"
+  log_file: "logs/pipeline.log"
 
 train:
   test_size: 0.2
@@ -11,31 +15,52 @@ train:
 
 schema:
   required_columns:
-    - age
-    - sex
-    - bmi
-    - children
-    - smoker
-    - region
-    - charges
-  target: "charges"
+    - "age"
+    - "sex"
+    - "bmi"
+    - "children"
+    - "smoker"
+    - "region"
+    - "charges"
+  target: "log_charges"
   domain:
     non_negative:
-      - age
-      - children
-      - charges
+      - "age"
+      - "children"
+      - "charges"
     positive:
-      - bmi
+      - "bmi"
     allowed_values:
       sex: ["male", "female"]
       smoker: ["yes", "no"]
 
 features:
   numerical:
-    - age
-    - bmi
-    - children
+    - "age"
+    - "bmi"
+    - "children"
   categorical:
-    - sex
-    - smoker
-    - region
+    - "sex"
+    - "smoker"
+    - "region"
+
+logging:
+  level: "INFO"
+
+wandb:
+  enabled: true
+  project: "insurance-regression"
+  name: ""
+  job_type: "training-pipeline"
+  group: ""
+  notes: ""
+  tags:
+    - "insurance"
+    - "regression"
+    - "sklearn"
+  log_processed_data: true
+  log_predictions: true
+  log_predictions_table: true
+  predictions_table_rows: 50
+  log_evaluation_plots: true
+  model_artifact_name: "linreg-insurance-model"
